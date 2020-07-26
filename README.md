@@ -1,1 +1,30 @@
 # yoyowallet-dev
+
+# Prerequisites:
+  - Install Docker Compose (https://docs.docker.com/compose/install/)
+  - Install HTTPie (https://github.com/jakubroztocil/httpie)
+
+# Bring up environment
+  - docker-compose up -d
+
+# Get token
+  - http --form post http://127.0.0.1:5000/token \
+    username=alice \
+    password=password
+
+# Create a transaction
+  - http --form post http://127.0.0.1:5000/transactions \
+    amount=2000 \
+    currency=GBP
+    token=$token-from-get-token-step
+
+# Fast transaction
+USERNAME=alice
+PASSWORD=password
+AMOUNT=200000
+CURRENCY=ZAR
+TOKEN=$(http --form post http://127.0.0.1:5000/token username=$USERNAME password=$PASSWORD | jq -r '.token')
+http --form post http://127.0.0.1:5000/transactions \
+    amount=$AMOUNT \
+    currency=$CURRENCY \
+    token=$TOKEN

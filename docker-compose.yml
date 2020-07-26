@@ -1,0 +1,33 @@
+version: "3"
+services:
+  authentication-api:
+    build:
+      context: .
+      dockerfile: auth-api/Dockerfile
+  redis-queue:
+    image: "redis"
+  transaction-api:
+    build:
+      context: .
+      dockerfile: transaction-api/Dockerfile
+    environment:
+      REDIS_URL: redis://redis-queue:6379/0
+    depends_on:
+      - redis-queue
+  loyalty-worker:
+    build:
+      context: .
+      dockerfile: loyalty-worker/Dockerfile
+    environment:
+      REDIS_URL: redis://redis-queue:6379/0
+    depends_on:
+      - redis-queue
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - authentication-api
+      - transaction-api
+    ports:
+      - "5000:5000"
