@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: yoyo-wallet-ingress
+  namespace: yoyo
+  annotations:
+    nginx.ingress.kubernetes.io: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /token
+            backend:
+              serviceName: auth-api-service
+              servicePort: 5000
+          - path: /transactions
+            backend:
+              serviceName: transaction-api-service
+              servicePort: 5000

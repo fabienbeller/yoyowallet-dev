@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: transaction-api
+  name: transaction-api
+  namespace: yoyo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-api
+  template:
+    metadata:
+      labels:
+        app: transaction-api
+    spec:
+      containers:
+        - image: fabfab/transaction-api:v1
+          name: transaction-api
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REDIS_URL
+              value: redis://redis-queue:6379/0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: transaction-api
+  name: transaction-api-service
+  namespace: yoyo
+spec:
+  ports:
+    - port: 5000
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: transaction-api
+  type: NodePort
+status:
+  loadBalancer: {}

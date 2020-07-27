@@ -28,3 +28,12 @@ http --form post http://127.0.0.1:5000/transactions \
     amount=$AMOUNT \
     currency=$CURRENCY \
     token=$TOKEN
+
+------------------------------------------------------------------------------------------
+
+# Extra fun experiment with Minikube
+# Minikube
+minikube kubectl -- apply -f k8s/namespace.yaml
+minikube addons enable ingress
+minikube kubectl -- apply -f k8s/.
+minikube kubectl -- get ingress -n yoyo
