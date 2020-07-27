@@ -3,27 +3,27 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: auth-api
-  name: auth-api
+    app: loyalty-worker
+  name: loyalty-worker
   namespace: yoyo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-api
+      app: loyalty-worker
   template:
     metadata:
       labels:
-        app: auth-api
+        app: loyalty-worker
     spec:
       containers:
-        - image: fabfab/auth-api:v1
-          name: auth-api
+        - image: fabfab/loyalty-worker:v1
+          name: loyalty-worker
           ports:
             - containerPort: 5000
           env:
             - name: REDIS_URL
-              value: redis://redis-queue:6379/0
+              value: redis://redis-service:6379/0
 ---
 apiVersion: v1
 kind: Service

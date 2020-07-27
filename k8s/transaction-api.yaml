@@ -23,7 +23,7 @@ spec:
             - containerPort: 5000
           env:
             - name: REDIS_URL
-              value: redis://redis-queue:6379/0
+              value: redis://redis-service:6379/0
 ---
 apiVersion: v1
 kind: Service
