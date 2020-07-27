@@ -5,20 +5,33 @@
   - Install HTTPie (https://github.com/jakubroztocil/httpie)
 
 # Bring up environment
-  - docker-compose up -d
+  - ```
+    docker-compose up -d
+    ```
+
+    
 
 # Get token
-  - http --form post http://127.0.0.1:5000/token \
+  - ```
+    http --form post http://127.0.0.1:5000/token \
     username=alice \
     password=password
+    ```
+    
+    
 
 # Create a transaction
-  - http --form post http://127.0.0.1:5000/transactions \
+  - ```
+    http --form post http://127.0.0.1:5000/transactions \
     amount=2000 \
-    currency=GBP
+    currency=GBP \
     token=$token-from-get-token-step
+    ```
+    
+    
 
 # Fast transaction
+```
 USERNAME=alice
 PASSWORD=password
 AMOUNT=200000
@@ -28,6 +41,9 @@ http --form post http://127.0.0.1:5000/transactions \
     amount=$AMOUNT \
     currency=$CURRENCY \
     token=$TOKEN
+```
+
+
 
 ------------------------------------------------------------------------------------------
 
@@ -38,12 +54,17 @@ http --form post http://127.0.0.1:5000/transactions \
 - Minikube (https://kubernetes.io/docs/tasks/tools/install-minikube/)
 
 # Bring up environment
+```
 minikube kubectl -- apply -f k8s/namespace.yaml
 minikube addons enable ingress
 minikube kubectl -- apply -f k8s/.
 minikube kubectl -- get ingress -n yoyo
+```
+
+
 
 # Fast transaction
+```
 USERNAME=alice
 PASSWORD=password
 AMOUNT=200000
@@ -53,3 +74,5 @@ http --form post http://$(minikube kubectl -- get ingress -n yoyo -o jsonpath="{
     amount=$AMOUNT \
     currency=$CURRENCY \
     token=$TOKEN
+```
+
