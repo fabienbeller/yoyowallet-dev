@@ -9,7 +9,7 @@
     docker-compose up -d
     ```
 
-    
+
 
 # Get token
   - ```
@@ -17,8 +17,8 @@
     username=alice \
     password=password
     ```
-    
-    
+
+
 
 # Create a transaction
   - ```
@@ -27,8 +27,8 @@
     currency=GBP \
     token=$token-from-get-token-step
     ```
-    
-    
+
+
 
 # Fast transaction
 ```
@@ -70,7 +70,7 @@ PASSWORD=password
 AMOUNT=200000
 CURRENCY=ZAR
 TOKEN=$(http --form post http://$(minikube kubectl -- get ingress -n yoyo -o jsonpath="{..status.loadBalancer.ingress[0]['hostname','ip']}")/token username=$USERNAME password=$PASSWORD | jq -r '.token')
-http --form post http://$(minikube kubectl -- get ingress -n yoyo -o jsonpath="{..status.loadBalancer.ingress[0]['hostname','ip']}")/transactions \
+http --form post http://$(minikube kubectl -- get ingress -n yoyo -o jsonpath="{..status.loadBalancer.ingress[0]['ip']}")/transactions \
     amount=$AMOUNT \
     currency=$CURRENCY \
     token=$TOKEN
